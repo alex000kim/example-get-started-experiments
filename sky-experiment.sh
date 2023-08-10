@@ -1,1 +1,0 @@
-sky exec mycluster sky-config.yaml --env DVC_STUDIO_TOKEN=$DVC_STUDIO_TOKEN
