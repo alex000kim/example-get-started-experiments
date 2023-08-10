@@ -1,0 +1,25 @@
+name: sky-run
+
+resources:
+  accelerators: T4:1
+  cloud: aws
+  region: us-east-2
+
+workdir: .
+
+envs:
+  DVC_STUDIO_TOKEN: ""
+
+setup: |
+  pip install --upgrade pip
+  pip install -r requirements.txt
+  sudo add-apt-repository ppa:flexiondotorg/nvtop -y && sudo apt install nvtop
+  git config --global user.name "dummy-name"
+  git config --global user.email "dummy-email"
+  dvc pull
+
+run: |
+  cd ~/sky_workdir
+  dvc exp run --pull --allow-missing
+  dvc exp push origin
+  dvc push
