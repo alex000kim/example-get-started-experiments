@@ -8,6 +8,8 @@ IDLE_MINUTES_TO_AUTOSTOP = 10
 
 def main(rerun_setup):
     task = sky.Task.from_yaml('sky-config.yaml')
+    # This is optional, but if you want touse https://studio.iterative.ai to, for example, monitor your experiments in real-time. 
+    # See: https://dvc.org/doc/studio/user-guide/projects-and-experiments/live-metrics-and-plots
     task.update_envs({'DVC_STUDIO_TOKEN': os.getenv('DVC_STUDIO_TOKEN')})
 
     s = sky.status(cluster_names=[CLUSTER_NAME])
