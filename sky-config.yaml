@@ -16,6 +16,5 @@ setup: | # only executed on `sky launch`
   sudo add-apt-repository ppa:flexiondotorg/nvtop -y && sudo apt install nvtop
 run: | # executed on `sky launch` or `sky exec`
   cd ~/sky_workdir
-  dvc pull
   dvc exp run --pull --allow-missing
   dvc exp push origin
