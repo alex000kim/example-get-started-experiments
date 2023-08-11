@@ -1,0 +1,21 @@
+name: sky-run
+resources:
+  accelerators: T4:1
+  cloud: aws
+  region: us-east-2
+workdir: .
+file_mounts: 
+  # if you want be able to interact with your git repos 
+  ~/.ssh/id_rsa: ~/.ssh/id_rsa
+  ~/.ssh/id_rsa.pub: ~/.ssh/id_rsa.pub
+  ~/.gitconfig: ~/.gitconfig
+setup: | # only executed on `sky launch`
+  pip install --upgrade pip
+  pip install -r requirements.txt
+  # optional nvtop installation if you want to monitor GPU usage
+  sudo add-apt-repository ppa:flexiondotorg/nvtop -y && sudo apt install nvtop
+run: | # executed on `sky launch` or `sky exec`
+  cd ~/sky_workdir
+  dvc pull
+  dvc exp run --pull --allow-missing
+  dvc exp push origin
