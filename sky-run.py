@@ -15,12 +15,12 @@ def main(rerun_setup, cluster_name):
     s = sky.status(cluster_names=[cluster_name])
     print(f'Found {len(s)} cluster(s)')
     print(f'Status:\n{s}\n')
-        
+    idle_minutes_to_autostop=IDLE_MINUTES_TO_AUTOSTOP if task.use_spot else None    
     if len(s) == 0:
         print('Cluster not found, launching cluster')
         sky.launch(task, 
                 cluster_name=cluster_name,
-                idle_minutes_to_autostop=10)
+                idle_minutes_to_autostop=idle_minutes_to_autostop)
     elif len(s) == 1 and s[0]['name'] == cluster_name:
         cluster_status = s[0]['status']
         if cluster_status.value == 'UP':
@@ -32,11 +32,11 @@ def main(rerun_setup, cluster_name):
                 # but will rerun the setup and then the run step
                 sky.launch(task, 
                         cluster_name=cluster_name,
-                        idle_minutes_to_autostop=10)
+                        idle_minutes_to_autostop=idle_minutes_to_autostop)
         elif cluster_status.value == 'STOPPED':
             print('Cluster is STOPPED, starting cluster')
             sky.start(cluster_name=cluster_name,
-                    idle_minutes_to_autostop=10)
+                    idle_minutes_to_autostop=idle_minutes_to_autostop)
         elif cluster_status.value == 'INIT':
             print('Cluster is INIT, waiting for cluster to be ready')
     else:
