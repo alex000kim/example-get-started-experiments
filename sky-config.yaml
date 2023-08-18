@@ -13,6 +13,7 @@ setup: | # only executed on `sky launch`
   pip install --upgrade pip
   pip install -r requirements.txt
   # Below is optional nvtop installation if you want to monitor GPU usage
+  sudo apt update -y
   sudo apt install libdrm-dev libsystemd-dev -y
   sudo apt install cmake libncurses5-dev libncursesw5-dev git -y 
   git clone https://github.com/Syllo/nvtop.git
